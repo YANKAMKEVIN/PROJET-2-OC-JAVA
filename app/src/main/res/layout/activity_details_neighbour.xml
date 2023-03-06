@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:paddingStart="5dp"
-                android:text="A propos de moi"
+                android:text="@string/details_about"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
