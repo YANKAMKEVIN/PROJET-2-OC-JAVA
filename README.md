@@ -1,4 +1,5 @@
-Pour exécuter et compiler l' appli:
+#Pour exécuter et compiler l' appli:
+
 Récupérez le lien de ce répertoire Github
 Lancez Android Studio
 Au niveau de la fenêtre "Welcome", choississez "Get from Version Control"
