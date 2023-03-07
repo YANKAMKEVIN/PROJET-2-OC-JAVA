@@ -29,26 +29,26 @@ public interface NeighbourApiService {
     void createNeighbour(Neighbour neighbour);
 
     /**
-     * Get favourite Neighbours
+     * Get the list of all favorites Neighbours
      * @return {@link List}
      */
-    List<Neighbour> getFavNeighbours();
+    List<Neighbour> getFavoritesNeighbours();
 
     /**
-     * Modify the Neighbour favourite status
-     * @return {@link List}
+     * Modify the Neighbour favorite status
+     * @param neighbourId
      */
-    void setFavouriteNeighbour(long neighbourId);
+    void setFavoriteById(long neighbourId);
 
     /**
-     * get the Neighbour favourite status
-     * @return {@link List}
+     * get the Neighbour favorite status
+     * @param neighbourId
      */
-    Boolean getFavouriteNeighbour(long neighbourId);
+    Boolean getFavoriteById(long neighbourId);
 
     /**
-     * Modify the Neighbour favourite status
-     * @return {@link List}
+     * Clear the Favorites Neighbour's list
+     *
      */
-    void clearFavouriteListNeighbour();
+    void clearFavoritesNeighbourList();
 }

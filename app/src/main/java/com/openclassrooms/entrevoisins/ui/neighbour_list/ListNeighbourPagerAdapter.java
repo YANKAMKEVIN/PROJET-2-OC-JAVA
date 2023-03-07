@@ -19,8 +19,9 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        Boolean isFavourite = (position != 0);
-        return NeighbourFragment.newInstance(isFavourite);
+        //If the position is 1, it means the fragment is used to display favorite neighbor, isFavorite is true
+        Boolean isFavorite = (position != 0);
+        return NeighbourFragment.newInstance(isFavorite);
     }
 
     /**

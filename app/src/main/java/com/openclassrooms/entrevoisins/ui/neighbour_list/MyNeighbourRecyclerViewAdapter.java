@@ -1,5 +1,13 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ABOUT_ME;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ADDRESS;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_AVATAR_URL;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ID;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_IS_FAVORITE;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_NAME;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_PHONE_NUMBER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -27,7 +35,7 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    private Context mContext;
+    private final Context mContext;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, Context context) {
         mNeighbours = items;
@@ -36,8 +44,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_neighbour, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_neighbour, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,10 +52,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
-        Glide.with(holder.mNeighbourAvatar.getContext())
-                .load(neighbour.getAvatarUrl())
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.mNeighbourAvatar);
+        Glide.with(holder.mNeighbourAvatar.getContext()).load(neighbour.getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(holder.mNeighbourAvatar);
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +62,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         });
         holder.parentLayout.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, DetailsNeighbourActivity.class);
-            intent.putExtra("neighbourId",neighbour.getId());
-            intent.putExtra("neighbourName",neighbour.getName());
-            intent.putExtra("neighbourAvatarUrl",neighbour.getAvatarUrl());
-            intent.putExtra("neighbourAboutMe",neighbour.getAboutMe());
-            intent.putExtra("neighbourPhoneNumber",neighbour.getPhoneNumber());
-            intent.putExtra("neighbourAddress",neighbour.getAddress());
-            intent.putExtra("neighbourIsFavorite",neighbour.getIsFavorite());
+            intent.putExtra(KEY_NEIGHBOUR_ID, neighbour.getId());
+            intent.putExtra(KEY_NEIGHBOUR_NAME, neighbour.getName());
+            intent.putExtra(KEY_NEIGHBOUR_AVATAR_URL, neighbour.getAvatarUrl());
+            intent.putExtra(KEY_NEIGHBOUR_ABOUT_ME, neighbour.getAboutMe());
+            intent.putExtra(KEY_NEIGHBOUR_PHONE_NUMBER, neighbour.getPhoneNumber());
+            intent.putExtra(KEY_NEIGHBOUR_ADDRESS, neighbour.getAddress());
+            intent.putExtra(KEY_NEIGHBOUR_IS_FAVORITE, neighbour.getIsFavorite());
             mContext.startActivity(intent);
         });
     }
@@ -83,10 +87,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ImageButton mDeleteButton;
 
         ConstraintLayout parentLayout;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            parentLayout = view.findViewById(R.id.mon_layout);
+            parentLayout = view.findViewById(R.id.fragment_neighbor);
         }
     }
 }

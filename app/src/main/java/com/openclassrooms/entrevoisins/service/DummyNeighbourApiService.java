@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.util.Log;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -38,19 +40,26 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         neighbours.add(neighbour);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Neighbour> getFavNeighbours() {
-        List<Neighbour> favouriteNeighbours = new ArrayList<>();
+    public List<Neighbour> getFavoritesNeighbours() {
+        List<Neighbour> favoriteNeighbours = new ArrayList<>();
         for (Neighbour neighbour : neighbours) {
             if (neighbour.getIsFavorite()) {
-                favouriteNeighbours.add(neighbour);
+                favoriteNeighbours.add(neighbour);
             }
         }
-        return favouriteNeighbours;
+        return favoriteNeighbours;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param neighbourId
+     */
     @Override
-    public void setFavouriteNeighbour(long neighbourId) {
+    public void setFavoriteById(long neighbourId) {
         for (Neighbour neighbour : neighbours) {
             if (neighbour.getId() == neighbourId) {
                 neighbour.setIsFavorite(!neighbour.getIsFavorite());
@@ -58,8 +67,12 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param neighbourId
+     */
     @Override
-    public Boolean getFavouriteNeighbour(long neighbourId) {
+    public Boolean getFavoriteById(long neighbourId) {
         for (Neighbour neighbour : neighbours) {
             if (neighbour.getId() == neighbourId) {
                 return neighbour.getIsFavorite();
@@ -68,8 +81,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void clearFavouriteListNeighbour() {
+    public void clearFavoritesNeighbourList() {
         for (Neighbour neighbour : neighbours) {
             if (neighbour.getIsFavorite()) {
                 neighbour.setIsFavorite(false);

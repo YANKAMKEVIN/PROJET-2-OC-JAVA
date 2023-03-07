@@ -1,9 +1,18 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ABOUT_ME;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ADDRESS;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_AVATAR_URL;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_ID;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_IS_FAVORITE;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_NAME;
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_NEIGHBOUR_PHONE_NUMBER;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,47 +28,61 @@ import butterknife.ButterKnife;
 
 public class DetailsNeighbourActivity extends AppCompatActivity {
 
-    /** Identifier */
+    /**
+     * Identifier
+     */
     private long id;
 
-    /** Full name */
+    /**
+     * Full name
+     */
     private String name;
 
-    /** Avatar */
+    /**
+     * Avatar
+     */
     private String avatarUrl;
 
-    /** Adress */
+    /**
+     * Adress
+     */
     private String address;
 
-    /** Phone number */
+    /**
+     * Phone number
+     */
     private String phoneNumber;
 
-    /** About me */
+    /**
+     * About me
+     */
     private String aboutMe;
 
-    /**Is Favorite*/
+    /**
+     * Is Favorite
+     */
     private Boolean isFavorite;
     private NeighbourApiService mApiService;
 
     // UI Components
     @BindView(R.id.activity_details_name_first)
-    TextView infoNameFirst;
+    TextView detailFirstName;
     @BindView(R.id.activity_details_name_second)
-    TextView infoNameSecond;
+    TextView detailSecondName;
     @BindView(R.id.activity_details_location)
-    TextView infoLocation;
-    @BindView(R.id.activity_details_number)
-    TextView infoNumber;
+    TextView detailLocation;
+    @BindView(R.id.activity_details_phone_number)
+    TextView detailPhoneNumber;
     @BindView(R.id.activity_details_facebook_url)
-    TextView infoFacebook;
+    TextView detailFacebookUrl;
     @BindView(R.id.activity_details_about)
-    TextView infoAbout;
+    TextView detailAbout;
     @BindView(R.id.activity_details_avatar)
-    ImageView infoImageView;
+    ImageView detailAvatar;
     @BindView(R.id.activity_details_back_button)
-    ImageView infoBack;
+    ImageView detailBackButton;
     @BindView(R.id.activity_details_favorites_button)
-    FloatingActionButton infoFavorisButton;
+    FloatingActionButton detailFavoriteButton;
 
     String facebookUrl = "www.facebook.com/";
 
@@ -68,49 +91,73 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_neighbour);
         ButterKnife.bind(this);
+        mApiService = DI.getNeighbourApiService();
 
+        //retrieves neighbor information
         getNeighbourInfo();
-        Neighbour mNeighbour = new Neighbour(id,name,avatarUrl,address,phoneNumber,aboutMe);
+
+        //creating a new neighbor
+        Neighbour mNeighbour = new Neighbour(id, name, avatarUrl, address, phoneNumber, aboutMe);
+
+        //bind the view with data collected
         bind(mNeighbour);
-        updateFavouriteIcon(isFavorite);
 
+        //update the favorite icon
+        updateFavoriteIcon(isFavorite);
 
-        infoBack.setOnClickListener(v -> onBackPressed());
-        infoFavorisButton.setOnClickListener(v -> {
-            mApiService.setFavouriteNeighbour(id);
-            updateFavouriteIcon(mApiService.getFavouriteNeighbour(id));
+        //back to the previous activity if the backButton is pressed
+        detailBackButton.setOnClickListener(v -> onBackPressed());
+
+        //update the favorite status of the current neighbor when the favorite button is pressed
+        detailFavoriteButton.setOnClickListener(v -> {
+            mApiService.setFavoriteById(id);
+            updateFavoriteIcon(mApiService.getFavoriteById(id));
         });
 
-        mApiService = DI.getNeighbourApiService();
     }
 
-    public void updateFavouriteIcon(Boolean isFavourite){
-        if (isFavourite)
-            infoFavorisButton.setImageResource(R.drawable.baseline_star_rate_24);
-        else
-            infoFavorisButton.setImageResource(R.drawable.ic_star_white_24dp);
+    /**
+     * Set the right imageResource to the favorite button from a boolean information
+     *
+     * @param isFavorite
+     */
+    public void updateFavoriteIcon(Boolean isFavorite) {
+
+        if (isFavorite) {
+            detailFavoriteButton.setImageResource(R.drawable.baseline_star_rate_24);
+        } else {
+            detailFavoriteButton.setImageResource(R.drawable.ic_star_white_24dp);
+        }
     }
 
+    /**
+     * Bind the detail layout views with the data of a neighbor
+     *
+     * @param neighbour
+     */
     @SuppressLint("SetTextI18n")
-    private void bind(Neighbour neighbour){
-        infoNameFirst.setText(neighbour.getName());
-        infoNameSecond.setText(neighbour.getName());
-        infoLocation.setText(neighbour.getAddress());
-        infoNumber.setText(neighbour.getPhoneNumber());
-        infoAbout.setText(neighbour.getAboutMe());
-        infoFacebook.setText(facebookUrl + neighbour.getName());
-        Glide.with(this).load(neighbour.getAvatarUrl()).into(infoImageView);
+    private void bind(Neighbour neighbour) {
+        detailFirstName.setText(neighbour.getName());
+        detailSecondName.setText(neighbour.getName());
+        detailLocation.setText(neighbour.getAddress());
+        detailPhoneNumber.setText(neighbour.getPhoneNumber());
+        detailAbout.setText(neighbour.getAboutMe());
+        detailFacebookUrl.setText(facebookUrl + neighbour.getName().toLowerCase());
+        Glide.with(this).load(neighbour.getAvatarUrl()).into(detailAvatar);
     }
 
-    private void getNeighbourInfo(){
+    /**
+     * Retrieves neighbor information/data from the bundle
+     */
+    private void getNeighbourInfo() {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        id = bundle.getLong("neighbourId");
-        name = bundle.getString("neighbourName");
-        avatarUrl = bundle.getString("neighbourAvatarUrl");
-        aboutMe = bundle.getString("neighbourAboutMe");
-        address = bundle.getString("neighbourAddress");
-        phoneNumber = bundle.getString("neighbourPhoneNumber");
-        isFavorite = bundle.getBoolean("neighbourIsFavorite");
+        id = bundle.getLong(KEY_NEIGHBOUR_ID);
+        name = bundle.getString(KEY_NEIGHBOUR_NAME);
+        avatarUrl = bundle.getString(KEY_NEIGHBOUR_AVATAR_URL);
+        aboutMe = bundle.getString(KEY_NEIGHBOUR_ABOUT_ME);
+        address = bundle.getString(KEY_NEIGHBOUR_ADDRESS);
+        phoneNumber = bundle.getString(KEY_NEIGHBOUR_PHONE_NUMBER);
+        isFavorite = bundle.getBoolean(KEY_NEIGHBOUR_IS_FAVORITE);
     }
 }

@@ -25,7 +25,7 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
-    /**Is Favorite*/
+    /**Favorite status*/
     private Boolean isFavorite;
 
     /**
@@ -94,7 +94,7 @@ public class Neighbour {
     }
 
     public Boolean getIsFavorite(){return isFavorite;}
-    public void setIsFavorite(Boolean favouriteStatus){isFavorite = favouriteStatus;}
+    public void setIsFavorite(Boolean favoriteStatus){isFavorite = favoriteStatus;}
 
     @Override
     public boolean equals(Object o) {
