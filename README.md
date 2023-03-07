@@ -6,4 +6,5 @@
 - Sur la liste déroulante, cliquez sur  "Clone"
 - Renseignez le lien Github précedement copié.
 - Validez
-- Compilez puis executez l'application
+- Compilez en cliquant sur build ou Make Projetc
+- Executez l'application en cliquant sur Run
