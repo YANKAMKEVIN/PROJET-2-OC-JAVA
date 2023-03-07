@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_infos_neighbour"
+    android:id="@+id/activity_detail_neighbour"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.neighbour_list.DetailsNeighbourActivity">
@@ -81,7 +81,7 @@
                 tools:text="Saint pierre du mont à km" />
 
             <TextView
-                android:id="@+id/activity_details_number"
+                android:id="@+id/activity_details_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:drawableLeft="@drawable/baseline_local_phone_24"
