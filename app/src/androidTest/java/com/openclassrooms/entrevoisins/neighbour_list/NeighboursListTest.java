@@ -75,7 +75,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(withId(R.id.list_neighbours))
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -91,55 +91,63 @@ public class NeighboursListTest {
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT-1));
-
     }
 
+    /**
+     * When we click on an item, the activity Detail is displayed
+     */
     @Test
-    public void testRecyclerViewItemClick() {
-        // Clique sur le premier élément du RecyclerView
+    public void myDetailActivity_shouldOpen_whenRecyclerview_isClicked() {
+        // We click on the first element if the recyclerView
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(0, click()));
 
-        // Vérifie que l'activité Infos s'ouvre
-        onView(allOf(withId(R.id.activity_infos_neighbour), isDisplayed()))
+        // Verify that the Detail activity is displayed
+        onView(withId(R.id.activity_detail_neighbour))
                 .check(matches(isDisplayed()));
     }
 
-    //On vérifie que le textview n'est pas nul
+    /**
+     * When we enter is the DetailActivity the textView is not null and correctly loaded
+     */
     @Test
-    public void isTextViewEmpty(){
+    public void myTextView_shouldNotBeEmpty(){
+        //We click on the first item of the recyclerView
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(0, click()));
+
+        //We verify that the textViews are not null
         assertNotNull(withId(R.id.activity_details_name_first));
         assertNotNull(withId(R.id.name));
 
+        //We verify that the name displayed is Caroline, the name of the first item/neighbor of our list
         onView(withId(R.id.activity_details_name_first)).check(matches(withText("Caroline")));
     }
 
+    /**
+     * When we click on the favorite button, the neighbor should be displayed in the Favorite list
+     */
     @Test
-    public void onTestLesFavoris(){
-        //On vérifie que la liste des favoris est nulle
-
-
+    public void pressingFavoriteButton_shouldAddTheNeighbor_toFavoriteNeighborList(){
+        //We click on the first item of the recyclerView
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(0, click()));
-        onView(allOf(withId(R.id.activity_infos_neighbour), isDisplayed()))
+        // Verify that the Detail activity is displayed
+        onView(withId(R.id.activity_detail_neighbour))
                 .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.activity_details_favorites_button), isDisplayed()))
-                .check(matches(isDisplayed()));
-
+        // Verify that favorite button is displayed with the white star, meaning the neighbor is not favorite
         onView(allOf(withId(R.id.activity_details_favorites_button), isDisplayed()))
                 .check(matches(withImageResource(R.drawable.ic_star_white_24dp)));
-
-        onView(allOf(withId(R.id.activity_details_favorites_button), isDisplayed()))
+        //We press the favorite button
+        onView(withId(R.id.activity_details_favorites_button))
                 .perform(click());
-
+        // Verify that favorite button is displayed with the yellow star, meaning the neighbor is now favorite
         onView(allOf(withId(R.id.activity_details_favorites_button), isDisplayed()))
                 .check(matches(withImageResource(R.drawable.baseline_star_rate_24)));
-
-       onView(allOf(withId(R.id.activity_details_back_button), isDisplayed()))
+        //We press the back button
+        onView(allOf(withId(R.id.activity_details_back_button), isDisplayed()))
                 .perform(click());
-
+        //We press the Favorites Tab, to display the list of favorites neighbor
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Favorites"),
                         childAtPosition(
@@ -150,13 +158,11 @@ public class NeighboursListTest {
                         isDisplayed()));
         tabView.perform(click());
 
-
+        //We click on the first item
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(0, click()));
-
+        //We verify that the name of the neighbor is the same as the name of the neighbor added in favorite
         onView(withId(R.id.activity_details_name_first)).check(matches(withText("Caroline")));
-
-
     }
 
     public static Matcher<View> withImageResource(final int resourceId) {

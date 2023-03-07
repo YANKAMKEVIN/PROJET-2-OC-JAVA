@@ -27,7 +27,7 @@ public class NeighbourServiceTest {
     @Before
     public void setup() {
         service = DI.getNewInstanceApiService();
-        service.clearFavouriteListNeighbour();
+        service.clearFavoritesNeighbourList();
     }
 
     @Test
@@ -45,40 +45,40 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void setFavouriteNeighbourWithSuccess() {
+    public void setFavoriteNeighbourWithSuccess() {
         long neighbourId = 2; // Set a valid neighbour ID
-        service.setFavouriteNeighbour(neighbourId);
-        Boolean isFavourite = service.getFavouriteNeighbour(neighbourId);
-        assertTrue(isFavourite); // Check that the neighbour is now marked as favourite
+        service.setFavoriteById(neighbourId);
+        Boolean isFavorite = service.getFavoriteById(neighbourId);
+        assertTrue(isFavorite); // Check that the neighbour is now marked as favorite
     }
 
     @Test
-    public void setDoubleFavouriteNeighbourWithSuccess() {
+    public void setDoublefavoriteNeighbourWithSuccess() {
         long neighbourId = 2; // Set a valid neighbour ID
-        service.setFavouriteNeighbour(neighbourId);
-        Boolean isFavourite = service.getFavouriteNeighbour(neighbourId);
-        assertTrue(isFavourite); // Check that the neighbour is now marked as favourite
-        service.setFavouriteNeighbour(neighbourId);
-        isFavourite = service.getFavouriteNeighbour(neighbourId);
-        assertFalse(isFavourite); // Check that the neighbour is no more marked as favourite
+        service.setFavoriteById(neighbourId);
+        Boolean isFavorite = service.getFavoriteById(neighbourId);
+        assertTrue(isFavorite); // Check that the neighbour is now marked as favorite
+        service.setFavoriteById(neighbourId);
+        isFavorite = service.getFavoriteById(neighbourId);
+        assertFalse(isFavorite); // Check that the neighbour is no more marked as favorite
     }
 
     @Test
     public void getFavoriteNeighbourStatusWithSuccess() {
         long neighbourId = 3; // Set a valid neighbour ID
-        service.setFavouriteNeighbour(neighbourId);
-        Boolean isFavourite = service.getFavouriteNeighbour(neighbourId);
-        assertTrue(isFavourite); // Check that the neighbour is marked as favourite
+        service.setFavoriteById(neighbourId);
+        Boolean isFavorite = service.getFavoriteById(neighbourId);
+        assertTrue(isFavorite); // Check that the neighbour is marked as favorite
     }
 
     @Test
-    public void getFavouriteNeighbourListWithSuccess() {
-        service.setFavouriteNeighbour(4); // Set a neighbour as favourite
-        List<Neighbour> favNeighbours = service.getFavNeighbours();
+    public void getFavoriteNeighbourListWithSuccess() {
+        service.setFavoriteById(4); // Set a neighbour as favorite
+        List<Neighbour> favNeighbours = service.getFavoritesNeighbours();
         assertEquals(1, favNeighbours.size()); // Check that only 1 neighbour is returned
         Neighbour neighbour = favNeighbours.get(0);
         assertEquals(4, neighbour.getId()); // Check that the correct neighbour is returned
-        assertEquals(true, neighbour.getIsFavorite()); // Check that the neighbour is marked as favourite
+        assertEquals(true, neighbour.getIsFavorite()); // Check that the neighbour is marked as favorite
     }
 
 }
