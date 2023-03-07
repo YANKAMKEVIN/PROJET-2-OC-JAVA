@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static com.openclassrooms.entrevoisins.NeighbourExtras.KEY_IS_FAVORITE;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,10 +36,10 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(Boolean isFavourite) {
+    public static NeighbourFragment newInstance(Boolean isFavorite) {
         NeighbourFragment fragment = new NeighbourFragment();
         Bundle args = new Bundle();
-        args.putBoolean("isFavourite", isFavourite);
+        args.putBoolean(KEY_IS_FAVORITE, isFavorite);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +65,8 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     void initList() {
-        Boolean isFavourite = getArguments().getBoolean("isFavourite");
-        mNeighbours = isFavourite ? mApiService.getFavNeighbours() : mApiService.getNeighbours();
+        Boolean isFavorite = getArguments().getBoolean(KEY_IS_FAVORITE);
+        mNeighbours = isFavorite ? mApiService.getFavoritesNeighbours() : mApiService.getNeighbours();
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getContext()));
     }
 
