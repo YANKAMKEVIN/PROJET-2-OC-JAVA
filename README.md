@@ -1,8 +1,9 @@
 # Pour exécuter et compiler l' appli Entrevoisins, veuillez suivre les étapes suivantes:
 
-- Récupérez le lien de ce répertoire Github
+- Récupérez le lien de ce répertoire Github en cliquant sur code, puis sur copier le lien Html
 - Lancez Android Studio
-- Au niveau de la fenêtre "Welcome", choississez "Get from Version Control"
-- Renseignez le lien Github
-- Valider
-- Executez sur votre Hardware Emulator locale
+- Cliquez sur l'onglet "Git"
+- Sur la liste déroulante, cliquez sur  "Clone"
+- Renseignez le lien Github précedement copié.
+- Validez
+- Compilez puis executez l'application
